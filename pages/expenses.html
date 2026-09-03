@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses | Spendly</title>
+    <meta name="description" content="Manage and track your student expenses with Spendly.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/expenses.css">
+</head>
+<body>
+
+    <div class="app-shell">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <a href="../index.html" class="brand">
+                    <span class="brand-mark">S</span>
+                    <span class="brand-name">Spendly</span>
+                </a>
+
+                <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
+                    ×
+                </button>
+            </div>
+
+            <nav class="main-nav">
+                <p class="nav-label">Workspace</p>
+
+                <a href="../index.html" class="nav-item">
+                    <span class="nav-icon">D</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="expenses.html" class="nav-item active">
+                    <span class="nav-icon">E</span>
+                    <span>Expenses</span>
+                </a>
+
+                <a href="analytics.html" class="nav-item">
+                    <span class="nav-icon">A</span>
+                    <span>Analytics</span>
+                </a>
+
+                <p class="nav-label nav-label-spaced">Account</p>
+
+                <a href="profile.html" class="nav-item">
+                    <span class="nav-icon">P</span>
+                    <span>Profile</span>
+                </a>
+
+                <a href="settings.html" class="nav-item">
+                    <span class="nav-icon">S</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-tip">
+                    <span class="tip-icon">i</span>
+                    <div>
+                        <strong>Small habit</strong>
+                        <p>Record expenses as soon as you make them.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-area">
+
+            <header class="topbar">
+                <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="topbar-page">
+                    <span class="page-eyebrow">Workspace</span>
+                    <h1>Expenses</h1>
+                </div>
+
+                <div class="topbar-actions">
+                    <a href="profile.html" class="profile-button">
+                        <span class="profile-avatar" id="profileAvatar">W</span>
+                        <span class="profile-name" id="profileName">Wish</span>
+                    </a>
+                </div>
+            </header>
+
+            <main class="page-content expenses-page">
+
+                <section class="page-heading">
+                    <div>
+                        <p class="section-kicker">Transaction history</p>
+                        <h2>All expenses</h2>
+                        <p class="section-description">
+                            Keep every purchase organized in one place.
+                        </p>
+                    </div>
+
+                    <button class="primary-button" type="button" data-open-expense>
+                        <span>+</span>
+                        Add expense
+                    </button>
+                </section>
+
+                <section class="expense-summary-strip">
+                    <div class="expense-summary-item">
+                        <span>Total recorded</span>
+                        <strong id="expensesTotal">₹0</strong>
+                    </div>
+
+                    <div class="expense-summary-item">
+                        <span>This month</span>
+                        <strong id="expensesMonthly">₹0</strong>
+                    </div>
+
+                    <div class="expense-summary-item">
+                        <span>Transactions</span>
+                        <strong id="expensesCount">0</strong>
+                    </div>
+
+                    <div class="expense-summary-item">
+                        <span>Average</span>
+                        <strong id="expensesAverage">₹0</strong>
+                    </div>
+                </section>
+
+                <section class="expense-toolbar">
+
+                    <div class="search-box">
+                        <span class="search-icon">⌕</span>
+                        <input
+                            type="search"
+                            id="expenseSearch"
+                            placeholder="Search expenses..."
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <div class="filter-group">
+
+                        <label class="filter-control">
+                            <span>Category</span>
+                            <select id="categoryFilter">
+                                <option value="all">All categories</option>
+                                <option value="Food">Food</option>
+                                <option value="Transport">Transport</option>
+                                <option value="Education">Education</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Health">Health</option>
+                                <option value="Bills">Bills</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </label>
+
+                        <label class="filter-control">
+                            <span>Date</span>
+                            <select id="dateFilter">
+                                <option value="all">All time</option>
+                                <option value="today">Today</option>
+                                <option value="week">Last 7 days</option>
+                                <option value="month">This month</option>
+                                <option value="year">This year</option>
+                            </select>
+                        </label>
+
+                        <label class="filter-control">
+                            <span>Sort</span>
+                            <select id="sortFilter">
+                                <option value="newest">Newest first</option>
+                                <option value="oldest">Oldest first</option>
+                                <option value="highest">Highest amount</option>
+                                <option value="lowest">Lowest amount</option>
+                                <option value="name">Name A–Z</option>
+                            </select>
+                        </label>
+
+                    </div>
+
+                </section>
+
+                <section class="expenses-card">
+
+                    <div class="expenses-card-header">
+                        <div>
+                            <h3>Transactions</h3>
+                            <p id="resultsText">Showing all expenses</p>
+                        </div>
+
+                        <button class="clear-filters-button" id="clearFilters" type="button">
+                            Clear filters
+                        </button>
+                    </div>
+
+                    <div class="expenses-table-wrapper">
+                        <table class="expenses-table">
+                            <thead>
+                                <tr>
+                                    <th>Expense</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                    <th>Note</th>
+                                    <th class="amount-column">Amount</th>
+                                    <th class="actions-column">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="expensesTableBody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="expenses-empty" id="expensesEmpty" hidden>
+                        <div class="empty-illustration">₹</div>
+                        <h3 id="emptyTitle">No expenses found</h3>
+                        <p id="emptyText">
+                            Try changing your filters or add a new expense.
+                        </p>
+                        <button class="secondary-button" type="button" data-open-expense>
+                            Add your first expense
+                        </button>
+                    </div>
+
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <div class="modal" id="expenseModal" aria-hidden="true">
+        <div class="modal-dialog">
+
+            <div class="modal-header">
+                <div>
+                    <p class="modal-kicker">Transaction</p>
+                    <h2 data-modal-title>Add expense</h2>
+                </div>
+
+                <button
+                    class="modal-close"
+                    type="button"
+                    data-close-expense
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+            </div>
+
+            <form id="expenseForm" novalidate>
+
+                <div class="form-group">
+                    <label for="expenseName">Expense name</label>
+                    <input
+                        type="text"
+                        id="expenseName"
+                        placeholder="e.g. Lunch, Bus pass, Books"
+                        maxlength="80"
+                    >
+                    <span class="field-error" id="expenseNameError"></span>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="expenseAmount">Amount</label>
+                        <div class="input-with-prefix">
+                            <span>₹</span>
+                            <input
+                                type="number"
+                                id="expenseAmount"
+                                placeholder="0.00"
+                                min="0.01"
+                                step="0.01"
+                            >
+                        </div>
+                        <span class="field-error" id="expenseAmountError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expenseCategory">Category</label>
+                        <select id="expenseCategory">
+                            <option value="">Select category</option>
+                            <option value="Food">Food</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Education">Education</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Health">Health</option>
+                            <option value="Bills">Bills</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="field-error" id="expenseCategoryError"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="expenseDate">Date</label>
+                    <input type="date" id="expenseDate">
+                    <span class="field-error" id="expenseDateError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="expenseNote">
+                        Note
+                        <span class="optional-label">Optional</span>
+                    </label>
+                    <textarea
+                        id="expenseNote"
+                        rows="3"
+                        maxlength="200"
+                        placeholder="Add a short note..."
+                    ></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="secondary-button" type="button" data-close-expense>
+                        Cancel
+                    </button>
+
+                    <button
+                        class="primary-button"
+                        type="submit"
+                        data-expense-submit
+                    >
+                        Add expense
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="expense-detail-modal" id="expenseDetailModal" aria-hidden="true">
+        <div class="expense-detail-dialog">
+
+            <div class="detail-header">
+                <div>
+                    <p class="modal-kicker">Expense details</p>
+                    <h2 id="detailExpenseName">Expense</h2>
+                </div>
+
+                <button
+                    class="modal-close"
+                    id="closeDetailModal"
+                    type="button"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+            </div>
+
+            <div class="detail-amount" id="detailExpenseAmount">₹0</div>
+
+            <div class="detail-grid">
+
+                <div class="detail-item">
+                    <span>Category</span>
+                    <strong id="detailExpenseCategory">—</strong>
+                </div>
+
+                <div class="detail-item">
+                    <span>Date</span>
+                    <strong id="detailExpenseDate">—</strong>
+                </div>
+
+                <div class="detail-item detail-item-full">
+                    <span>Note</span>
+                    <strong id="detailExpenseNote">No note added</strong>
+                </div>
+
+            </div>
+
+            <div class="detail-actions">
+                <button class="secondary-button" id="detailEditButton" type="button">
+                    Edit expense
+                </button>
+
+                <button class="danger-button" id="detailDeleteButton" type="button">
+                    Delete
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <span class="toast-icon" id="toastIcon">✓</span>
+        <span id="toastMessage">Done</span>
+    </div>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/expenses.js"></script>
+
+</body>
+</html>
