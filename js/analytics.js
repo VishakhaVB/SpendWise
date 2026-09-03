@@ -40,16 +40,20 @@ function initializeAnalytics() {
 
 function loadProfile() {
     const profile = getProfile();
-    const name = profile.name || "Wish";
-    const avatar = profile.avatar || name.charAt(0).toUpperCase();
+    const name = profile.name || "";
+    const avatar = profile.avatar || getAvatarLetter(name);
 
     if (analyticsElements.profileName) {
-        analyticsElements.profileName.textContent = name;
+        analyticsElements.profileName.textContent = name || "Set up profile";
     }
 
     if (analyticsElements.profileAvatar) {
         analyticsElements.profileAvatar.textContent = avatar;
     }
+}
+
+function getAvatarLetter(name) {
+    return String(name || "").trim().charAt(0).toUpperCase() || "○";
 }
 
 function setupEvents() {

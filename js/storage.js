@@ -5,11 +5,11 @@ const STORAGE_KEYS = {
 };
 
 const DEFAULT_PROFILE = {
-    name: "Wish",
+    name: "",
     email: "",
     college: "",
-    course: "B.Tech Information Technology",
-    avatar: "W"
+    course: "",
+    avatar: ""
 };
 
 const DEFAULT_SETTINGS = {
@@ -145,8 +145,8 @@ function saveProfile(profile) {
         name: String(profile.name || DEFAULT_PROFILE.name).trim(),
         email: String(profile.email || "").trim(),
         college: String(profile.college || "").trim(),
-        course: String(profile.course || DEFAULT_PROFILE.course).trim(),
-        avatar: String(profile.avatar || DEFAULT_PROFILE.avatar).trim().charAt(0).toUpperCase()
+        course: String(profile.course || "").trim(),
+        avatar: String(profile.avatar || "").trim().charAt(0).toUpperCase()
     };
 
     return writeStorage(STORAGE_KEYS.profile, cleanProfile);

@@ -1,0 +1,152 @@
+.dashboard-page {
+    width: 100%;
+    min-width: 0;
+}
+
+.dashboard-welcome {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 34px 36px 28px;
+    box-sizing: border-box;
+}
+
+.dashboard-welcome > div {
+    min-width: 0;
+}
+
+.dashboard-summary {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    padding: 0 36px;
+    box-sizing: border-box;
+}
+
+.dashboard-main-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr);
+    gap: 20px;
+    padding: 20px 36px 0;
+    box-sizing: border-box;
+}
+
+.dashboard-main-card {
+    min-width: 0;
+    width: 100%;
+}
+
+.dashboard-lower-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 20px;
+    padding: 20px 36px 36px;
+    box-sizing: border-box;
+}
+
+.dashboard-lower-card {
+    min-width: 0;
+    width: 100%;
+}
+
+.dashboard-card-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.dashboard-chart {
+    width: 100%;
+    min-width: 0;
+}
+
+.dashboard-chart-empty {
+    width: 100%;
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.dashboard-insight {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dashboard-insight-content {
+    min-width: 0;
+}
+
+.dashboard-category-total {
+    white-space: nowrap;
+}
+
+.dashboard-recent-link {
+    white-space: nowrap;
+}
+
+@media (max-width: 1180px) {
+    .dashboard-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-main-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .dashboard-lower-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 760px) {
+    .dashboard-welcome {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 24px 20px;
+    }
+
+    .dashboard-summary {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 0 20px;
+    }
+
+    .dashboard-main-grid {
+        padding: 20px 20px 0;
+    }
+
+    .dashboard-lower-grid {
+        padding: 20px 20px 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-welcome {
+        padding: 20px 16px;
+    }
+
+    .dashboard-summary {
+        padding: 0 16px;
+        gap: 12px;
+    }
+
+    .dashboard-main-grid {
+        padding: 16px 16px 0;
+    }
+
+    .dashboard-lower-grid {
+        padding: 16px 16px 24px;
+    }
+
+    .dashboard-card-heading {
+        flex-direction: column;
+        gap: 8px;
+    }
+}

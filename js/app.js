@@ -28,6 +28,7 @@ const elements = {
 function initializeDashboard() {
     setupDate();
     setupProfile();
+    setupNavigation();
     setupModal();
     setupExpenseForm();
     renderDashboard();
@@ -53,23 +54,29 @@ function setupProfile() {
     const profileName = document.getElementById("profileName");
     const profileAvatar = document.getElementById("profileAvatar");
     const welcomeName = document.getElementById("welcomeName");
+    const profileLink = document.querySelector(".profile-button");
+    const name = profile.name || "";
 
     if (profileName) {
-        profileName.textContent = profile.name || "Wish";
+        profileName.textContent = name || "Set up profile";
     }
 
     if (welcomeName) {
-        welcomeName.textContent = profile.name || "Wish";
+        welcomeName.textContent = name || "Welcome to Spendly";
     }
 
     if (profileAvatar) {
-        profileAvatar.textContent = profile.avatar || getInitials(profile.name);
+        profileAvatar.textContent = profile.avatar || getInitials(name);
+    }
+
+    if (profileLink) {
+        profileLink.setAttribute("aria-label", name ? "Open profile" : "Set up profile");
     }
 }
 
 function getInitials(name) {
     if (!name) {
-        return "W";
+        return "○";
     }
 
     return name
@@ -77,7 +84,7 @@ function getInitials(name) {
         .split(/\s+/)
         .slice(0, 2)
         .map(part => part.charAt(0).toUpperCase())
-        .join("");
+        .join("") || "○";
 }
 
 function setupModal() {
@@ -105,9 +112,31 @@ function setupModal() {
     }
 
     document.addEventListener("keydown", event => {
-        if (event.key === "Escape" && elements.expenseModal?.classList.contains("active")) {
+        if (event.key === "Escape" && elements.expenseModal?.classList.contains("show")) {
             closeExpenseModal();
         }
+    });
+}
+
+function setupNavigation() {
+    const menuToggle = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+    const sidebarClose = document.getElementById("sidebarClose");
+    const mobileOverlay = document.getElementById("mobileOverlay");
+
+    const closeSidebar = () => {
+        sidebar?.classList.remove("open");
+        mobileOverlay?.classList.remove("show");
+    };
+
+    menuToggle?.addEventListener("click", () => {
+        sidebar?.classList.add("open");
+        mobileOverlay?.classList.add("show");
+    });
+    sidebarClose?.addEventListener("click", closeSidebar);
+    mobileOverlay?.addEventListener("click", closeSidebar);
+    document.querySelectorAll(".main-nav a").forEach(link => {
+        link.addEventListener("click", closeSidebar);
     });
 }
 
@@ -143,7 +172,7 @@ function openExpenseModal(expense = null) {
         elements.expenseDate.value = getTodayDate();
     }
 
-    elements.expenseModal.classList.add("active");
+    elements.expenseModal.classList.add("show");
     document.body.classList.add("modal-open");
 
     setTimeout(() => {
@@ -156,7 +185,7 @@ function closeExpenseModal() {
         return;
     }
 
-    elements.expenseModal.classList.remove("active");
+    elements.expenseModal.classList.remove("show");
     document.body.classList.remove("modal-open");
     appState.editingExpenseId = null;
     clearValidation();

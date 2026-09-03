@@ -51,11 +51,15 @@ function loadSettings() {
 
 function loadProfile() {
     const profile = getProfile();
-    const name = profile.name || "Wish";
-    const avatar = profile.avatar || name.charAt(0).toUpperCase();
+    const name = profile.name || "";
+    const avatar = profile.avatar || getAvatarLetter(name);
 
-    settingsElements.profileName.textContent = name;
+    settingsElements.profileName.textContent = name || "Set up profile";
     settingsElements.profileAvatar.textContent = avatar;
+}
+
+function getAvatarLetter(name) {
+    return String(name || "").trim().charAt(0).toUpperCase() || "○";
 }
 
 function setupSettingsEvents() {

@@ -62,7 +62,7 @@ function setupProfile() {
     const profile = getProfile();
 
     if (expensePageElements.profileName) {
-        expensePageElements.profileName.textContent = profile.name || "Wish";
+        expensePageElements.profileName.textContent = profile.name || "Set up profile";
     }
 
     if (expensePageElements.profileAvatar) {
@@ -72,7 +72,7 @@ function setupProfile() {
 
 function getInitials(name) {
     if (!name) {
-        return "W";
+        return "○";
     }
 
     return name
@@ -80,7 +80,7 @@ function getInitials(name) {
         .split(/\s+/)
         .slice(0, 2)
         .map(part => part.charAt(0).toUpperCase())
-        .join("");
+        .join("") || "○";
 }
 
 function setupNavigation() {

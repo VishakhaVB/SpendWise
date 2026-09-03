@@ -54,16 +54,20 @@ function applyDashboardTheme() {
 
 function updateProfile() {
     const profile = dashboardState.profile;
-    const name = profile.name || "Wish";
-    const avatar = profile.avatar || name.charAt(0).toUpperCase();
+    const name = profile.name || "";
+    const avatar = profile.avatar || getAvatarLetter(name);
 
     if (dashboardElements.profileName) {
-        dashboardElements.profileName.textContent = name;
+        dashboardElements.profileName.textContent = name || "Set up profile";
     }
 
     if (dashboardElements.profileAvatar) {
         dashboardElements.profileAvatar.textContent = avatar;
     }
+}
+
+function getAvatarLetter(name) {
+    return String(name || "").trim().charAt(0).toUpperCase() || "○";
 }
 
 function updateCurrentDate() {

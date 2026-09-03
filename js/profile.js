@@ -47,15 +47,16 @@ function loadProfileIntoForm() {
 
 function updateProfilePreview() {
     const profile = profileState.profile;
-    const name = profile.name || "Wish";
-    const course = profile.course || "B.Tech Information Technology";
-    const avatar = profile.avatar || getAvatarLetter(name);
+    const enteredName = profile.name || "";
+    const name = enteredName || "Your profile";
+    const course = profile.course || "Complete your profile to personalize Spendly.";
+    const avatar = profile.avatar || getAvatarLetter(enteredName);
 
     profileElements.displayName.textContent = name;
     profileElements.displayCourse.textContent = course;
     profileElements.avatar.textContent = avatar;
     profileElements.largeAvatar.textContent = avatar;
-    profileElements.topbarName.textContent = name;
+    profileElements.topbarName.textContent = profile.name || "Set up profile";
 }
 
 function setupForm() {
@@ -138,24 +139,6 @@ function validateProfile(values) {
         valid = false;
     }
 
-    if (!values.college) {
-        setFieldError(
-            profileElements.collegeInput,
-            profileElements.collegeError,
-            "Please enter your college."
-        );
-        valid = false;
-    }
-
-    if (!values.course) {
-        setFieldError(
-            profileElements.courseInput,
-            profileElements.courseError,
-            "Please enter your course."
-        );
-        valid = false;
-    }
-
     return valid;
 }
 
@@ -181,32 +164,34 @@ function clearValidation() {
 }
 
 function updateLivePreview() {
-    const name = profileElements.nameInput.value.trim() || "Wish";
-    const avatar = getAvatarLetter(name);
+    const enteredName = profileElements.nameInput.value.trim();
+    const name = enteredName || "Your profile";
+    const avatar = getAvatarLetter(enteredName);
 
     profileElements.displayName.textContent = name;
+    profileElements.displayCourse.textContent = profileElements.courseInput.value.trim() || "Complete your profile to personalize Spendly.";
     profileElements.avatar.textContent = avatar;
     profileElements.largeAvatar.textContent = avatar;
-    profileElements.topbarName.textContent = name;
+    profileElements.topbarName.textContent = enteredName || "Set up profile";
 }
 
 function updateLiveCourse() {
     const course = profileElements.courseInput.value.trim();
 
     profileElements.displayCourse.textContent =
-        course || "B.Tech Information Technology";
+        course || "Complete your profile to personalize Spendly.";
 }
 
 function getAvatarLetter(name) {
     const cleanName = String(name || "").trim();
 
     if (!cleanName) {
-        return "W";
+        return "○";
     }
 
     const firstLetter = cleanName.charAt(0).toUpperCase();
 
-    return /[A-Z]/.test(firstLetter) ? firstLetter : "U";
+    return firstLetter;
 }
 
 function setupNavigation() {
