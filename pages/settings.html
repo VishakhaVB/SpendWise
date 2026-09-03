@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Spendly</title>
+    <meta name="description" content="Manage your Spendly application settings and data.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/settings.css">
+</head>
+<body>
+
+    <div class="app-shell">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <a href="../index.html" class="brand">
+                    <span class="brand-mark">S</span>
+                    <span class="brand-name">Spendly</span>
+                </a>
+
+                <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
+                    ×
+                </button>
+            </div>
+
+            <nav class="main-nav">
+                <p class="nav-label">Workspace</p>
+
+                <a href="../index.html" class="nav-item">
+                    <span class="nav-icon">D</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="expenses.html" class="nav-item">
+                    <span class="nav-icon">E</span>
+                    <span>Expenses</span>
+                </a>
+
+                <a href="analytics.html" class="nav-item">
+                    <span class="nav-icon">A</span>
+                    <span>Analytics</span>
+                </a>
+
+                <p class="nav-label nav-label-spaced">Account</p>
+
+                <a href="profile.html" class="nav-item">
+                    <span class="nav-icon">P</span>
+                    <span>Profile</span>
+                </a>
+
+                <a href="settings.html" class="nav-item active">
+                    <span class="nav-icon">S</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-tip">
+                    <span class="tip-icon">i</span>
+                    <div>
+                        <strong>Your data, your control</strong>
+                        <p>Export your expenses whenever you want.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-area">
+
+            <header class="topbar">
+                <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="topbar-page">
+                    <span class="page-eyebrow">Account</span>
+                    <h1>Settings</h1>
+                </div>
+
+                <div class="topbar-actions">
+                    <a href="profile.html" class="profile-button">
+                        <span class="profile-avatar" id="profileAvatar">W</span>
+                        <span class="profile-name" id="profileName">Wish</span>
+                    </a>
+                </div>
+            </header>
+
+            <main class="page-content settings-page">
+
+                <section class="page-heading">
+                    <div>
+                        <p class="section-kicker">Preferences</p>
+                        <h2>Make Spendly work your way</h2>
+                        <p class="section-description">
+                            Control your display preferences and manage the data stored by the app.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="settings-layout">
+
+                    <div class="settings-main">
+
+                        <article class="settings-card">
+
+                            <div class="settings-card-header">
+                                <div>
+                                    <span class="card-kicker">Appearance</span>
+                                    <h3>Display preferences</h3>
+                                    <p>Choose how Spendly looks and formats your information.</p>
+                                </div>
+                            </div>
+
+                            <div class="settings-list">
+
+                                <div class="settings-row">
+                                    <div class="settings-row-content">
+                                        <strong>Currency</strong>
+                                        <span>Choose the currency used throughout your expense tracker.</span>
+                                    </div>
+
+                                    <div class="settings-control">
+                                        <select id="currencySetting">
+                                            <option value="INR">Indian Rupee (₹)</option>
+                                            <option value="USD">US Dollar ($)</option>
+                                            <option value="EUR">Euro (€)</option>
+                                            <option value="GBP">British Pound (£)</option>
+                                            <option value="JPY">Japanese Yen (¥)</option>
+                                            <option value="AUD">Australian Dollar (A$)</option>
+                                            <option value="CAD">Canadian Dollar (C$)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="settings-row">
+                                    <div class="settings-row-content">
+                                        <strong>Theme</strong>
+                                        <span>Use a light, dark, or system-controlled appearance.</span>
+                                    </div>
+
+                                    <div class="settings-control">
+                                        <select id="themeSetting">
+                                            <option value="system">System default</option>
+                                            <option value="light">Light</option>
+                                            <option value="dark">Dark</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="settings-row">
+                                    <div class="settings-row-content">
+                                        <strong>Notifications</strong>
+                                        <span>Allow Spendly to show helpful application notifications.</span>
+                                    </div>
+
+                                    <label class="toggle-control">
+                                        <input type="checkbox" id="notificationsSetting">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                        <article class="settings-card">
+
+                            <div class="settings-card-header">
+                                <div>
+                                    <span class="card-kicker">Your data</span>
+                                    <h3>Data management</h3>
+                                    <p>Keep a backup of your expenses or move them to another browser.</p>
+                                </div>
+                            </div>
+
+                            <div class="settings-list">
+
+                                <div class="settings-row">
+                                    <div class="settings-row-content">
+                                        <strong>Export your data</strong>
+                                        <span>Download your expenses, profile and settings as a JSON file.</span>
+                                    </div>
+
+                                    <button class="secondary-button settings-action" id="exportDataButton" type="button">
+                                        Export
+                                    </button>
+                                </div>
+
+                                <div class="settings-row">
+                                    <div class="settings-row-content">
+                                        <strong>Import data</strong>
+                                        <span>Restore a previously exported Spendly backup from this device.</span>
+                                    </div>
+
+                                    <div>
+                                        <input type="file" id="importDataInput" accept=".json,application/json" hidden>
+                                        <button class="secondary-button settings-action" id="importDataButton" type="button">
+                                            Import
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                        <article class="settings-card danger-card">
+
+                            <div class="settings-card-header">
+                                <div>
+                                    <span class="card-kicker danger-kicker">Danger zone</span>
+                                    <h3>Reset application data</h3>
+                                    <p>These actions permanently affect the data stored in this browser.</p>
+                                </div>
+                            </div>
+
+                            <div class="settings-list">
+
+                                <div class="settings-row">
+                                    <div class="settings-row-content">
+                                        <strong>Clear all expenses</strong>
+                                        <span>Delete every expense while keeping your profile and preferences.</span>
+                                    </div>
+
+                                    <button class="danger-button settings-action" id="clearExpensesButton" type="button">
+                                        Clear expenses
+                                    </button>
+                                </div>
+
+                                <div class="settings-row">
+                                    <div class="settings-row-content">
+                                        <strong>Reset Spendly</strong>
+                                        <span>Restore the application to its original state and remove saved data.</span>
+                                    </div>
+
+                                    <button class="danger-button settings-action" id="resetAppButton" type="button">
+                                        Reset app
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                    <aside class="settings-side">
+
+                        <article class="settings-status-card">
+
+                            <div class="settings-status-mark">
+                                ✓
+                            </div>
+
+                            <span class="card-kicker">Local storage</span>
+
+                            <h3>Your data stays on this browser</h3>
+
+                            <p>
+                                Spendly currently works without a backend. Your expenses,
+                                profile and preferences are stored locally on this device.
+                            </p>
+
+                            <div class="storage-status">
+                                <span>Storage status</span>
+                                <strong id="storageStatus">Active</strong>
+                            </div>
+
+                        </article>
+
+                        <article class="settings-help-card">
+
+                            <span class="card-kicker">Backup tip</span>
+
+                            <h3>Protect your records</h3>
+
+                            <p>
+                                Export your data regularly if your expense history is important.
+                                You can import the backup later on another browser.
+                            </p>
+
+                            <button class="text-button" id="quickExportButton" type="button">
+                                Export a backup
+                                <span>→</span>
+                            </button>
+
+                        </article>
+
+                    </aside>
+
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <div class="confirm-modal" id="confirmModal" aria-hidden="true">
+        <div class="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+
+            <div class="confirm-icon" id="confirmIcon">!</div>
+
+            <div class="confirm-content">
+                <h3 id="confirmTitle">Are you sure?</h3>
+                <p id="confirmText">This action cannot be undone.</p>
+            </div>
+
+            <div class="confirm-actions">
+                <button class="secondary-button" id="cancelConfirmButton" type="button">
+                    Cancel
+                </button>
+
+                <button class="danger-button" id="confirmActionButton" type="button">
+                    Continue
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <span class="toast-icon" id="toastIcon">✓</span>
+        <span id="toastMessage">Settings saved</span>
+    </div>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/settings.js"></script>
+
+</body>
+</html>
