@@ -20,13 +20,13 @@ const DEFAULT_SETTINGS = {
 
 function readStorage(key, fallback) {
     try {
-        const stored = localStorage.getItem(key);
+        const value = localStorage.getItem(key);
 
-        if (!stored) {
+        if (value === null) {
             return fallback;
         }
 
-        return JSON.parse(stored);
+        return JSON.parse(value);
     } catch (error) {
         return fallback;
     }
@@ -44,35 +44,41 @@ function writeStorage(key, value) {
 function getExpenses() {
     const expenses = readStorage(STORAGE_KEYS.expenses, []);
 
-    return Array.isArray(expenses) ? expenses : [];
+    if (!Array.isArray(expenses)) {
+        return [];
+    }
+
+    return expenses.filter(expense =>
+        expense &&
+        typeof expense === "object" &&
+        typeof expense.name === "string" &&
+        Number.isFinite(Number(expense.amount)) &&
+        typeof expense.date === "string"
+    );
 }
 
 function saveExpenses(expenses) {
-    if (!Array.isArray(expenses)) {
-        return false;
-    }
-
-    return writeStorage(STORAGE_KEYS.expenses, expenses);
+    return writeStorage(STORAGE_KEYS.expenses, Array.isArray(expenses) ? expenses : []);
 }
 
 function addExpense(expense) {
     const expenses = getExpenses();
 
     const newExpense = {
-        id: crypto.randomUUID
-            ? crypto.randomUUID()
-            : `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        id: generateId(),
         name: String(expense.name || "").trim(),
-        amount: Number(expense.amount),
+        amount: Number(expense.amount) || 0,
         category: String(expense.category || "Other"),
-        date: expense.date,
+        date: expense.date || getTodayDate(),
         note: String(expense.note || "").trim(),
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
     };
 
     expenses.push(newExpense);
+    saveExpenses(expenses);
 
-    return saveExpenses(expenses) ? newExpense : null;
+    return newExpense;
 }
 
 function getExpenseById(id) {
@@ -81,7 +87,6 @@ function getExpenseById(id) {
 
 function updateExpense(id, updatedData) {
     const expenses = getExpenses();
-
     const index = expenses.findIndex(expense => expense.id === id);
 
     if (index === -1) {
@@ -91,96 +96,110 @@ function updateExpense(id, updatedData) {
     expenses[index] = {
         ...expenses[index],
         ...updatedData,
-        id: expenses[index].id,
+        amount: Number(updatedData.amount ?? expenses[index].amount) || 0,
+        name: String(updatedData.name ?? expenses[index].name).trim(),
+        category: String(updatedData.category ?? expenses[index].category),
+        date: updatedData.date ?? expenses[index].date,
+        note: String(updatedData.note ?? expenses[index].note).trim(),
         updatedAt: new Date().toISOString()
     };
 
-    return saveExpenses(expenses) ? expenses[index] : null;
+    saveExpenses(expenses);
+
+    return expenses[index];
 }
 
 function deleteExpense(id) {
     const expenses = getExpenses();
-
-    const filteredExpenses = expenses.filter(
-        expense => expense.id !== id
-    );
+    const filteredExpenses = expenses.filter(expense => expense.id !== id);
 
     if (filteredExpenses.length === expenses.length) {
         return false;
     }
 
-    return saveExpenses(filteredExpenses);
+    saveExpenses(filteredExpenses);
+    return true;
 }
 
 function clearExpenses() {
-    try {
-        localStorage.removeItem(STORAGE_KEYS.expenses);
-        return true;
-    } catch (error) {
-        return false;
-    }
+    return saveExpenses([]);
 }
 
 function getProfile() {
-    const profile = readStorage(
-        STORAGE_KEYS.profile,
-        DEFAULT_PROFILE
-    );
+    const profile = readStorage(STORAGE_KEYS.profile, DEFAULT_PROFILE);
+
+    if (!profile || typeof profile !== "object" || Array.isArray(profile)) {
+        return { ...DEFAULT_PROFILE };
+    }
 
     return {
         ...DEFAULT_PROFILE,
-        ...(profile && typeof profile === "object" ? profile : {})
+        ...profile
     };
 }
 
 function saveProfile(profile) {
-    if (!profile || typeof profile !== "object") {
-        return false;
-    }
-
-    const updatedProfile = {
+    const cleanProfile = {
         ...DEFAULT_PROFILE,
-        ...profile
+        ...profile,
+        name: String(profile.name || DEFAULT_PROFILE.name).trim(),
+        email: String(profile.email || "").trim(),
+        college: String(profile.college || "").trim(),
+        course: String(profile.course || DEFAULT_PROFILE.course).trim(),
+        avatar: String(profile.avatar || DEFAULT_PROFILE.avatar).trim().charAt(0).toUpperCase()
     };
 
-    return writeStorage(
-        STORAGE_KEYS.profile,
-        updatedProfile
-    );
+    return writeStorage(STORAGE_KEYS.profile, cleanProfile);
 }
 
 function getSettings() {
-    const settings = readStorage(
-        STORAGE_KEYS.settings,
-        DEFAULT_SETTINGS
-    );
+    const settings = readStorage(STORAGE_KEYS.settings, DEFAULT_SETTINGS);
+
+    if (!settings || typeof settings !== "object" || Array.isArray(settings)) {
+        return { ...DEFAULT_SETTINGS };
+    }
+
+    const validCurrencies = [
+        "INR",
+        "USD",
+        "EUR",
+        "GBP",
+        "JPY",
+        "AUD",
+        "CAD"
+    ];
+
+    const validThemes = [
+        "system",
+        "light",
+        "dark"
+    ];
 
     return {
-        ...DEFAULT_SETTINGS,
-        ...(settings && typeof settings === "object" ? settings : {})
+        currency: validCurrencies.includes(settings.currency)
+            ? settings.currency
+            : DEFAULT_SETTINGS.currency,
+        theme: validThemes.includes(settings.theme)
+            ? settings.theme
+            : DEFAULT_SETTINGS.theme,
+        notifications: settings.notifications !== false
     };
 }
 
 function saveSettings(settings) {
-    if (!settings || typeof settings !== "object") {
-        return false;
-    }
-
-    const updatedSettings = {
-        ...DEFAULT_SETTINGS,
-        ...settings
+    const cleanSettings = {
+        currency: settings.currency || DEFAULT_SETTINGS.currency,
+        theme: settings.theme || DEFAULT_SETTINGS.theme,
+        notifications: settings.notifications !== false
     };
 
-    return writeStorage(
-        STORAGE_KEYS.settings,
-        updatedSettings
-    );
+    return writeStorage(STORAGE_KEYS.settings, cleanSettings);
 }
 
 function exportAppData() {
     return {
         app: "Spendly",
-        version: "1.0",
+        version: 1,
         exportedAt: new Date().toISOString(),
         expenses: getExpenses(),
         profile: getProfile(),
@@ -190,61 +209,55 @@ function exportAppData() {
 
 function importAppData(data) {
     if (!data || typeof data !== "object") {
-        return {
-            success: false,
-            message: "Invalid data format."
-        };
+        throw new Error("Invalid backup");
     }
 
     if (!Array.isArray(data.expenses)) {
-        return {
-            success: false,
-            message: "Expense data is missing or invalid."
-        };
+        throw new Error("Invalid expenses");
     }
 
-    const validExpenses = data.expenses.filter(expense => {
-        return (
+    if (!data.profile || typeof data.profile !== "object") {
+        throw new Error("Invalid profile");
+    }
+
+    if (!data.settings || typeof data.settings !== "object") {
+        throw new Error("Invalid settings");
+    }
+
+    const cleanExpenses = data.expenses
+        .filter(expense =>
             expense &&
             typeof expense === "object" &&
             typeof expense.name === "string" &&
             Number.isFinite(Number(expense.amount)) &&
-            Number(expense.amount) > 0 &&
-            typeof expense.category === "string" &&
             typeof expense.date === "string"
-        );
-    });
-
-    const expensesWithIds = validExpenses.map(expense => ({
-        ...expense,
-        id: expense.id || (
-            crypto.randomUUID
-                ? crypto.randomUUID()
-                : `${Date.now()}-${Math.random().toString(16).slice(2)}`
         )
-    }));
+        .map(expense => ({
+            id: expense.id || generateId(),
+            name: String(expense.name).trim(),
+            amount: Number(expense.amount) || 0,
+            category: String(expense.category || "Other"),
+            date: expense.date,
+            note: String(expense.note || "").trim(),
+            createdAt: expense.createdAt || new Date().toISOString(),
+            updatedAt: expense.updatedAt || new Date().toISOString()
+        }));
 
-    const expensesSaved = saveExpenses(expensesWithIds);
-
-    if (!expensesSaved) {
-        return {
-            success: false,
-            message: "Unable to save imported expenses."
-        };
-    }
-
-    if (data.profile && typeof data.profile === "object") {
-        saveProfile(data.profile);
-    }
-
-    if (data.settings && typeof data.settings === "object") {
-        saveSettings(data.settings);
-    }
-
-    return {
-        success: true,
-        importedExpenses: expensesWithIds.length
+    const importedProfile = {
+        ...DEFAULT_PROFILE,
+        ...data.profile
     };
+
+    const importedSettings = {
+        ...DEFAULT_SETTINGS,
+        ...data.settings
+    };
+
+    saveExpenses(cleanExpenses);
+    saveProfile(importedProfile);
+    saveSettings(importedSettings);
+
+    return true;
 }
 
 function resetAppData() {
@@ -259,84 +272,67 @@ function resetAppData() {
     }
 }
 
-function formatCurrency(amount, currency = "INR") {
-    const numericAmount = Number(amount);
-
-    if (!Number.isFinite(numericAmount)) {
-        return "₹0";
-    }
+function formatCurrency(amount, currency) {
+    const settings = getSettings();
+    const selectedCurrency = currency || settings.currency || "INR";
+    const value = Number(amount) || 0;
 
     try {
         return new Intl.NumberFormat("en-IN", {
             style: "currency",
-            currency,
-            maximumFractionDigits: 2
-        }).format(numericAmount);
+            currency: selectedCurrency,
+            maximumFractionDigits: selectedCurrency === "JPY" ? 0 : 2
+        }).format(value);
     } catch (error) {
-        return `₹${numericAmount.toFixed(2)}`;
+        return `${selectedCurrency} ${value.toFixed(2)}`;
     }
 }
 
 function formatDate(dateString) {
     if (!dateString) {
-        return "";
+        return "—";
     }
 
-    const date = new Date(`${dateString}T00:00:00`);
+    const date = new Date(dateString);
 
     if (Number.isNaN(date.getTime())) {
-        return dateString;
+        return "—";
     }
 
-    return new Intl.DateTimeFormat("en-IN", {
+    return date.toLocaleDateString("en-IN", {
         day: "2-digit",
         month: "short",
         year: "numeric"
-    }).format(date);
+    });
 }
 
 function isCurrentMonth(dateString) {
-    if (!dateString) {
-        return false;
-    }
-
-    const date = new Date(`${dateString}T00:00:00`);
+    const date = new Date(dateString);
     const now = new Date();
 
     return (
+        !Number.isNaN(date.getTime()) &&
         date.getMonth() === now.getMonth() &&
         date.getFullYear() === now.getFullYear()
     );
 }
 
 function calculateTotal(expenses) {
-    if (!Array.isArray(expenses)) {
-        return 0;
-    }
-
     return expenses.reduce((total, expense) => {
-        const amount = Number(expense.amount);
-
-        return total + (
-            Number.isFinite(amount) && amount > 0
-                ? amount
-                : 0
-        );
+        return total + (Number(expense.amount) || 0);
     }, 0);
 }
 
 function calculateMonthlyTotal(expenses) {
-    if (!Array.isArray(expenses)) {
-        return 0;
-    }
-
-    return calculateTotal(
-        expenses.filter(expense => isCurrentMonth(expense.date))
-    );
+    return expenses
+        .filter(expense => isCurrentMonth(expense.date))
+        .reduce((total, expense) => {
+            return total + (Number(expense.amount) || 0);
+        }, 0);
 }
 
 function calculateAverage(expenses) {
-    if (!Array.isArray(expenses) || expenses.length === 0) {
+    if (!expenses.length) {
         return 0;
     }
 
@@ -344,22 +340,33 @@ function calculateAverage(expenses) {
 }
 
 function getCategoryTotals(expenses) {
-    const totals = {};
-
-    if (!Array.isArray(expenses)) {
-        return totals;
-    }
-
-    expenses.forEach(expense => {
+    return expenses.reduce((totals, expense) => {
         const category = expense.category || "Other";
-        const amount = Number(expense.amount);
-
-        if (!Number.isFinite(amount) || amount <= 0) {
-            return;
-        }
+        const amount = Number(expense.amount) || 0;
 
         totals[category] = (totals[category] || 0) + amount;
-    });
 
-    return totals;
+        return totals;
+    }, {});
+}
+
+function generateId() {
+    if (
+        typeof crypto !== "undefined" &&
+        typeof crypto.randomUUID === "function"
+    ) {
+        return crypto.randomUUID();
+    }
+
+    return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+}
+
+function getTodayDate() {
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
 }
