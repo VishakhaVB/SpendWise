@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | Spendly</title>
+    <meta name="description" content="Understand your student spending patterns with Spendly analytics.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/analytics.css">
+</head>
+<body>
+
+    <div class="app-shell">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <a href="../index.html" class="brand">
+                    <span class="brand-mark">S</span>
+                    <span class="brand-name">Spendly</span>
+                </a>
+
+                <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
+                    ×
+                </button>
+            </div>
+
+            <nav class="main-nav">
+                <p class="nav-label">Workspace</p>
+
+                <a href="../index.html" class="nav-item">
+                    <span class="nav-icon">D</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="expenses.html" class="nav-item">
+                    <span class="nav-icon">E</span>
+                    <span>Expenses</span>
+                </a>
+
+                <a href="analytics.html" class="nav-item active">
+                    <span class="nav-icon">A</span>
+                    <span>Analytics</span>
+                </a>
+
+                <p class="nav-label nav-label-spaced">Account</p>
+
+                <a href="profile.html" class="nav-item">
+                    <span class="nav-icon">P</span>
+                    <span>Profile</span>
+                </a>
+
+                <a href="settings.html" class="nav-item">
+                    <span class="nav-icon">S</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-tip">
+                    <span class="tip-icon">i</span>
+                    <div>
+                        <strong>Know your pattern</strong>
+                        <p>Review your spending regularly to make better decisions.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-area">
+
+            <header class="topbar">
+                <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="topbar-page">
+                    <span class="page-eyebrow">Insights</span>
+                    <h1>Analytics</h1>
+                </div>
+
+                <div class="topbar-actions">
+                    <a href="profile.html" class="profile-button">
+                        <span class="profile-avatar" id="profileAvatar">W</span>
+                        <span class="profile-name" id="profileName">Wish</span>
+                    </a>
+                </div>
+            </header>
+
+            <main class="page-content analytics-page">
+
+                <section class="page-heading analytics-heading">
+                    <div>
+                        <p class="section-kicker">Spending intelligence</p>
+                        <h2>Understand where your money goes</h2>
+                        <p class="section-description">
+                            Turn your expense history into simple, useful patterns.
+                        </p>
+                    </div>
+
+                    <div class="analytics-period">
+                        <label for="analyticsPeriod">Period</label>
+                        <select id="analyticsPeriod">
+                            <option value="6">Last 6 months</option>
+                            <option value="12">Last 12 months</option>
+                            <option value="3">Last 3 months</option>
+                            <option value="all">All time</option>
+                        </select>
+                    </div>
+                </section>
+
+                <section class="analytics-stat-grid">
+
+                    <article class="analytics-stat-card">
+                        <span class="analytics-stat-label">Total spending</span>
+                        <strong id="analyticsTotal">₹0</strong>
+                        <span class="analytics-stat-meta" id="analyticsTotalMeta">
+                            Across all recorded expenses
+                        </span>
+                    </article>
+
+                    <article class="analytics-stat-card">
+                        <span class="analytics-stat-label">Monthly average</span>
+                        <strong id="analyticsMonthlyAverage">₹0</strong>
+                        <span class="analytics-stat-meta" id="analyticsAverageMeta">
+                            Based on selected period
+                        </span>
+                    </article>
+
+                    <article class="analytics-stat-card">
+                        <span class="analytics-stat-label">Largest category</span>
+                        <strong id="analyticsTopCategory">—</strong>
+                        <span class="analytics-stat-meta" id="analyticsTopCategoryMeta">
+                            No category data yet
+                        </span>
+                    </article>
+
+                    <article class="analytics-stat-card">
+                        <span class="analytics-stat-label">Highest expense</span>
+                        <strong id="analyticsHighestExpense">₹0</strong>
+                        <span class="analytics-stat-meta" id="analyticsHighestExpenseMeta">
+                            No expenses yet
+                        </span>
+                    </article>
+
+                </section>
+
+                <section class="analytics-main-grid">
+
+                    <article class="analytics-card spending-trend-card">
+
+                        <div class="analytics-card-header">
+                            <div>
+                                <span class="card-kicker">Trend</span>
+                                <h3>Monthly spending</h3>
+                                <p>See how your spending changes over time.</p>
+                            </div>
+                        </div>
+
+                        <div class="trend-chart" id="monthlyTrendChart">
+                            <div class="analytics-empty-chart">
+                                <span>No spending data yet</span>
+                                <small>Add expenses to see your monthly trend.</small>
+                            </div>
+                        </div>
+
+                    </article>
+
+                    <article class="analytics-card category-card">
+
+                        <div class="analytics-card-header">
+                            <div>
+                                <span class="card-kicker">Breakdown</span>
+                                <h3>By category</h3>
+                                <p>Where most of your money is going.</p>
+                            </div>
+                        </div>
+
+                        <div class="category-breakdown" id="analyticsCategoryBreakdown">
+                            <div class="analytics-empty">
+                                <span>No category data yet</span>
+                            </div>
+                        </div>
+
+                    </article>
+
+                </section>
+
+                <section class="analytics-lower-grid">
+
+                    <article class="analytics-card comparison-card">
+
+                        <div class="analytics-card-header">
+                            <div>
+                                <span class="card-kicker">Comparison</span>
+                                <h3>Spending by month</h3>
+                                <p>Compare your recent monthly totals.</p>
+                            </div>
+                        </div>
+
+                        <div class="monthly-comparison" id="monthlyComparison">
+                            <div class="analytics-empty">
+                                <span>No monthly data yet</span>
+                            </div>
+                        </div>
+
+                    </article>
+
+                    <article class="analytics-card insights-card">
+
+                        <div class="analytics-card-header">
+                            <div>
+                                <span class="card-kicker">Observations</span>
+                                <h3>What your data says</h3>
+                                <p>Automatically generated from your expenses.</p>
+                            </div>
+                        </div>
+
+                        <div class="insights-list" id="analyticsInsights">
+                            <div class="analytics-insight">
+                                <span class="insight-number">01</span>
+                                <div>
+                                    <strong>Start tracking</strong>
+                                    <p>Add expenses to unlock personalized spending insights.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </article>
+
+                </section>
+
+                <section class="analytics-card top-expenses-card">
+
+                    <div class="analytics-card-header">
+                        <div>
+                            <span class="card-kicker">Highlights</span>
+                            <h3>Largest expenses</h3>
+                            <p>Your highest individual transactions in the selected period.</p>
+                        </div>
+                    </div>
+
+                    <div class="top-expenses-list" id="topExpensesList">
+                        <div class="analytics-empty">
+                            <span>No expenses to display</span>
+                        </div>
+                    </div>
+
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <div class="toast" id="toast">
+        <span class="toast-icon" id="toastIcon">✓</span>
+        <span id="toastMessage">Done</span>
+    </div>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/analytics.js"></script>
+
+</body>
+</html>
