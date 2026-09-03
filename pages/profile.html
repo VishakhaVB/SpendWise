@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Spendly</title>
+    <meta name="description" content="Manage your Spendly profile information.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body>
+
+    <div class="app-shell">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <a href="../index.html" class="brand">
+                    <span class="brand-mark">S</span>
+                    <span class="brand-name">Spendly</span>
+                </a>
+
+                <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
+                    ×
+                </button>
+            </div>
+
+            <nav class="main-nav">
+                <p class="nav-label">Workspace</p>
+
+                <a href="../index.html" class="nav-item">
+                    <span class="nav-icon">D</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="expenses.html" class="nav-item">
+                    <span class="nav-icon">E</span>
+                    <span>Expenses</span>
+                </a>
+
+                <a href="analytics.html" class="nav-item">
+                    <span class="nav-icon">A</span>
+                    <span>Analytics</span>
+                </a>
+
+                <p class="nav-label nav-label-spaced">Account</p>
+
+                <a href="profile.html" class="nav-item active">
+                    <span class="nav-icon">P</span>
+                    <span>Profile</span>
+                </a>
+
+                <a href="settings.html" class="nav-item">
+                    <span class="nav-icon">S</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-tip">
+                    <span class="tip-icon">i</span>
+                    <div>
+                        <strong>Keep it personal</strong>
+                        <p>Your profile details stay stored locally on this device.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-area">
+
+            <header class="topbar">
+                <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="topbar-page">
+                    <span class="page-eyebrow">Account</span>
+                    <h1>Profile</h1>
+                </div>
+
+                <div class="topbar-actions">
+                    <a href="profile.html" class="profile-button">
+                        <span class="profile-avatar" id="profileAvatar">W</span>
+                        <span class="profile-name" id="profileName">Wish</span>
+                    </a>
+                </div>
+            </header>
+
+            <main class="page-content profile-page">
+
+                <section class="page-heading">
+                    <div>
+                        <p class="section-kicker">Personal details</p>
+                        <h2>Your profile</h2>
+                        <p class="section-description">
+                            Keep your information up to date so Spendly feels like your own workspace.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="profile-layout">
+
+                    <article class="profile-intro-card">
+
+                        <div class="profile-large-avatar" id="largeProfileAvatar">
+                            W
+                        </div>
+
+                        <div class="profile-intro-content">
+                            <span class="profile-intro-label">Spendly profile</span>
+                            <h3 id="profileDisplayName">Wish</h3>
+                            <p id="profileDisplayCourse">B.Tech Information Technology</p>
+                        </div>
+
+                        <div class="profile-local-note">
+                            <span class="local-note-icon">✓</span>
+                            <div>
+                                <strong>Saved locally</strong>
+                                <p>Your profile is stored in this browser.</p>
+                            </div>
+                        </div>
+
+                    </article>
+
+                    <article class="profile-form-card">
+
+                        <div class="profile-card-header">
+                            <div>
+                                <span class="card-kicker">Information</span>
+                                <h3>Profile details</h3>
+                                <p>Update the information shown across your Spendly workspace.</p>
+                            </div>
+                        </div>
+
+                        <form id="profileForm" novalidate>
+
+                            <div class="profile-form-grid">
+
+                                <div class="form-field profile-field-full">
+                                    <label for="profileNameInput">Full name</label>
+                                    <input
+                                        type="text"
+                                        id="profileNameInput"
+                                        name="name"
+                                        maxlength="60"
+                                        placeholder="Enter your name"
+                                        autocomplete="name"
+                                    >
+                                    <span class="field-error" id="profileNameError"></span>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="profileEmailInput">Email address</label>
+                                    <input
+                                        type="email"
+                                        id="profileEmailInput"
+                                        name="email"
+                                        maxlength="100"
+                                        placeholder="you@example.com"
+                                        autocomplete="email"
+                                    >
+                                    <span class="field-error" id="profileEmailError"></span>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="profileCollegeInput">College</label>
+                                    <input
+                                        type="text"
+                                        id="profileCollegeInput"
+                                        name="college"
+                                        maxlength="120"
+                                        placeholder="Your college"
+                                        autocomplete="organization"
+                                    >
+                                    <span class="field-error" id="profileCollegeError"></span>
+                                </div>
+
+                                <div class="form-field profile-field-full">
+                                    <label for="profileCourseInput">Course</label>
+                                    <input
+                                        type="text"
+                                        id="profileCourseInput"
+                                        name="course"
+                                        maxlength="100"
+                                        placeholder="e.g. B.Tech Information Technology"
+                                    >
+                                    <span class="field-error" id="profileCourseError"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="profile-form-footer">
+                                <span class="profile-save-status" id="profileSaveStatus">
+                                    Changes are saved only when you press Save.
+                                </span>
+
+                                <button class="primary-button profile-save-button" type="submit">
+                                    Save changes
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </article>
+
+                </section>
+
+                <section class="profile-secondary-grid">
+
+                    <article class="profile-info-card">
+                        <div class="profile-info-icon">1</div>
+                        <div>
+                            <span class="card-kicker">Privacy</span>
+                            <h3>Local-first profile</h3>
+                            <p>
+                                Your profile information is kept in your browser using local storage.
+                                It is not sent to a remote server by Spendly.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="profile-info-card">
+                        <div class="profile-info-icon">2</div>
+                        <div>
+                            <span class="card-kicker">Personalization</span>
+                            <h3>Used across the app</h3>
+                            <p>
+                                Your name, avatar and course information can appear in your dashboard
+                                and account areas.
+                            </p>
+                        </div>
+                    </article>
+
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <div class="toast" id="toast">
+        <span class="toast-icon" id="toastIcon">✓</span>
+        <span id="toastMessage">Profile saved</span>
+    </div>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/profile.js"></script>
+
+</body>
+</html>
